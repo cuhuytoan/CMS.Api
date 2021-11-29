@@ -29,25 +29,14 @@ namespace CMS.Api.Services
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
-
-            AssemblyName[]? assembly = Assembly.GetEntryAssembly().GetReferencedAssemblies()
-                .Where(x => x.Name == "CMS.Services").ToArray();
             
-
-            foreach (var assemblyName in assembly)
-            {
-                // do your comparison
-            }
             
-            var assembliesToScan = new[]
-            {
-                Assembly.GetExecutingAssembly(),                
-             
-           };
-            var ressult = services.RegisterAssemblyPublicNonGenericClasses(assembly)
-                 .Where(x => x.Name.EndsWith("Repository"))  
+            var ressult = services.RegisterAssemblyPublicNonGenericClasses(Utils.ListTypeRepository().ToArray())
+                 .Where(x => x.Name.EndsWith("Repository"))
                  .AsPublicImplementedInterfaces(ServiceLifetime.Transient);
             var xxx = ressult.Count();
+
+            
         }
        
     }

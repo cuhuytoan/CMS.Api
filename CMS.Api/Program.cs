@@ -10,7 +10,7 @@ builder.Services.ConfigureConnectDB(builder.Configuration.GetConnectionString("C
 // ===== Add Database Auth===========================
 builder.Services.ConfigureConnectDBAuth(builder.Configuration.GetConnectionString("AuthConnection"));
 // ===== Add Services Transient Repository===========
-//builder.Services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+
 builder.Services.ConfigureServices();
 ServiceProvider? provider = builder.Services.BuildServiceProvider();
 

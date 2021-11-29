@@ -3,6 +3,7 @@ using CMS.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace CMS.Services.RepositoriesBase
@@ -32,6 +33,10 @@ namespace CMS.Services.RepositoriesBase
             }
         }
 
+        
+
+      
+
         public void Save()
         {
             
@@ -46,5 +51,6 @@ namespace CMS.Services.RepositoriesBase
         }
         
        
+
     }
 }
