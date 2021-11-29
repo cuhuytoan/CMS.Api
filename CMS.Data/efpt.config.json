@@ -1,0 +1,389 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "CmsContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "ModelEntity",
+   "ProjectRootNamespace": "CMS.Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Advertising]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AdvertisingBlock]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AdvertisingType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Article]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleAttachFile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleBlock]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleBlockArticle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleCategoryArticle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleCategoryAssign]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleComment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleCommentStaff]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleRelationArticle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleTop]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ArticleType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetRoleClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUserClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUserLogins]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUserProfiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AspNetUserTokens]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Bank]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Country]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Department]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DepartmentMan]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[District]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Location]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductAttachFile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBlock]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBlockProduct]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrand]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandFollow]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandModelManagement]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandQRCodeCreateType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductBrandType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCategoryAssign]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCategoryProduct]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductComment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductCommentStaff]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductLike]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductManufacture]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOrder]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOrderDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOrderPaymentMethod]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOrderPaymentStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductOrderStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductPicture]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductProperty]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductPropertyCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductPropertyType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductPropertyValue]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductRelationProduct]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductReview]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductStatus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductTop]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProductType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ReplaceChar]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Setting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Unit]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserNotify]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Ward]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SpAccountSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleBreadcrumb]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleCategoryTree]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleCommentSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleCommentStaffSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleGetByBlockId]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleGetByCategoryId]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleGetNewByCategoryId]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleGetTopByCategoryId]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpArticleSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpGetLstProductProperties]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductBrandSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductBreadcrumb]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductCategoryTree]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductCommentSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductCommentStaffSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductOrderSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductPropertyCategoryTree]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductReviewSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpProductSearch]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[SpUserNotifySearch]",
+         "ObjectType": 1
+      }
+   ],
+   "UiHint": "S1-VIETNAMDNS.cms",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": true,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
