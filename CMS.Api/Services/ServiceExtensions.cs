@@ -1,12 +1,4 @@
-﻿using CMS.Data;
-using CMS.Data.ModelEntity;
-using CMS.Services.Repositories;
-using CMS.Services.RepositoriesBase;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using NetCore.AutoRegisterDi;
-using System.Reflection;
-
+﻿
 namespace CMS.Api.Services
 {
     public static class ServiceExtensions
@@ -30,13 +22,14 @@ namespace CMS.Api.Services
         public static void ConfigureServices(this IServiceCollection services)
         {
             
-            
             var ressult = services.RegisterAssemblyPublicNonGenericClasses(Utils.ListTypeRepository().ToArray())
                  .Where(x => x.Name.EndsWith("Repository"))
                  .AsPublicImplementedInterfaces(ServiceLifetime.Transient);
             var xxx = ressult.Count();
+        }
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
 
-            
         }
        
     }

@@ -10,10 +10,12 @@ builder.Services.ConfigureConnectDB(builder.Configuration.GetConnectionString("C
 // ===== Add Database Auth===========================
 builder.Services.ConfigureConnectDBAuth(builder.Configuration.GetConnectionString("AuthConnection"));
 // ===== Add Services Transient Repository===========
-
 builder.Services.ConfigureServices();
 ServiceProvider? provider = builder.Services.BuildServiceProvider();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PolicyName", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains());
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,12 +25,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseCors("PolicyName");
+var routing = new RoutingWrapper(app, provider);
+
+routing.MapAll();
 
 
-var st = new RoutingWrapper(app, provider);
-
-st.MapAll();
 
 app.Run();
 

@@ -1,6 +1,4 @@
-﻿using CMS.Services.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-
+﻿
 namespace CMS.Api.Routing.Base
 {
     public interface IRoutingWrapper

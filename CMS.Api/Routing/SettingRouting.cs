@@ -1,6 +1,4 @@
 ﻿
-using CMS.Services.Repositories;
-
 namespace CMS.Api.Routing
 {
     public interface ISettingRouting : IRoutingBase<Setting,ISettingRepository>
@@ -16,8 +14,6 @@ namespace CMS.Api.Routing
         public async Task MapAll()
         {
             await MapBase();
-          
         }
-     
     }
 }
