@@ -20,17 +20,20 @@ namespace CMS.Services.RepositoriesBase
             TEntity = CmsContext.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             return await TEntity.AsNoTracking().ToListAsync();
         }
 
-        public async Task<T> GetById(object id)
+        public virtual async Task<T> GetById(int id)
         {
             return await TEntity.FindAsync(id);
         }
-
-        public async Task<VirtualizeResponse<T>> GetAllWithPaging(int page , int pageSize )
+        public virtual async Task<T> GetByGuidId(Guid id)
+        {
+            return await TEntity.FindAsync(id);
+        }
+        public virtual async Task<VirtualizeResponse<T>> GetAllWithPaging(int page , int pageSize )
         {
             VirtualizeResponse<T> entity = new();
             entity.TotalSize = TEntity.Count();
@@ -38,34 +41,35 @@ namespace CMS.Services.RepositoriesBase
             return entity;
         }
 
-        public async Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> expression)
+        public virtual async Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> expression)
         {
             return await TEntity.Where(expression).AsNoTracking().ToListAsync();
         }
 
-        public async Task<T> Create(T entity)
+        public virtual async Task<T> Create(T entity)
         {
             var obj = await TEntity.AddAsync(entity);
             await CmsContext.SaveChangesAsync();
             return obj.Entity;
         }
 
-        public void Update(T entity)
+        public virtual async Task<T> Update(T entity)
         {
             TEntity.Update(entity);
-            CmsContext.SaveChanges();
+            await CmsContext.SaveChangesAsync();
+            return entity;
         }
 
-        public void Delete(T entity)
+        public virtual async Task Delete(T entity)
         {
             TEntity.Remove(entity);
-            CmsContext.SaveChanges();
+            await CmsContext.SaveChangesAsync();
         }
 
-        public void BulkDelete(IEnumerable<T> lstEntity)
+        public virtual async Task BulkDelete(IEnumerable<T> lstEntity)
         {
             TEntity.RemoveRange(lstEntity);
-            CmsContext.SaveChanges();
+            await CmsContext.SaveChangesAsync();
         }
     }
 }

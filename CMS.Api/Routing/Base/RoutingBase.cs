@@ -6,7 +6,7 @@ namespace CMS.Api.Routing.Base
         Task MapBase();
         
     }    
-    public abstract class RoutingBase<T,R> : IRoutingBase<T,R> where R : IRepositoryBase<T>
+    public abstract class RoutingBase<T,R> : IRoutingBase<T,R> where R : IRepositoryBase<T>                                                              
     {                                   
         protected WebApplication app { get; set; }
 
@@ -19,27 +19,96 @@ namespace CMS.Api.Routing.Base
 
         public async Task MapBase()
         {
-            await GetAll();
-          
-            app.MapGet($"/{typeof(T).Name}/GetById", async (int id,HttpContext http, R repository) =>
-            {
-                var item = await repository.GetById(id);
-                if (item == null) return Results.NotFound($"Not found item with id : {id}");
-                return Results.Ok(item);
-            });
-        }  
-        private async Task GetAll()
-        {
+
             app.MapGet($"/{typeof(T).Name}/GetAll", async (R repository) =>
             {
                 var result = await repository.GetAll();
-                return Results.Json(result);
+                return Results.Ok(result);
             });
-        }
-        private async Task GetById()
-        {
-           
-        }   
-        
+
+            app.MapGet($"/{typeof(T).Name}/GetById", async (string id, HttpContext http, R repository) =>
+            {
+                try
+                {
+                    var item = await repository.GetById(id);
+                    if (item == null) return Results.NotFound($"Not found item with id : {id}");
+                    return Results.Ok(item);
+                }
+                catch(Exception ex)
+                {
+                    Results.StatusCode(500);
+                    return Results.Problem(ex.ToString());
+                }
+                
+            });
+
+            app.MapPost($"/{typeof(T).Name}/PostAsync", async (T model, HttpContext http, R repository) =>
+            {
+                try
+                {
+                    var item = await repository.Create(model);
+                    return Results.Ok(item);
+                }
+                catch (Exception ex)
+                {
+                    return Results.Problem(ex.ToString());
+                }
+            });
+
+            app.MapPut($"/{typeof(T).Name}/PutAsync", async (object id, T model, HttpContext http, R repository) =>
+            {
+                try
+                {
+                    var item = await repository.GetById(id);
+                    if (item == null) return Results.NotFound($"Not found item with id : {id}");
+                    await repository.Update(model);
+                    return Results.Ok(item);
+                }
+                catch (Exception ex)
+                {
+                    return Results.Problem(ex.ToString());
+                }
+
+            });
+
+            app.MapDelete($"/{typeof(T).Name}/Delete", async (object id, HttpContext http, R repository) =>
+            {
+                try
+                {
+                    var item = await repository.GetById(id);
+                    if (item == null) return Results.NotFound($"Not found item with id : {id}");
+                    await repository.Delete(item);
+                    return Results.Ok(item);
+                }
+                catch (Exception ex)
+                {
+                    return Results.Problem(ex.ToString());
+                }
+
+            });
+
+            app.MapDelete($"/{typeof(T).Name}/BulkDelete", async (string ids, HttpContext http, R repository) =>
+            {
+                try
+                {
+                    List<T> lstDelete = new();
+                    IEnumerable<object> lstObjects = ids.Split(",").ToList();
+                    foreach (var obj in lstObjects)
+                    {
+                        var existsItem = await repository.GetById(obj);
+                        if (existsItem == null) return Results.NotFound($"Not found item with id : {obj}");
+                        lstDelete.Add(existsItem);
+                    }
+                    await repository.BulkDelete(lstDelete);
+                    return Results.Ok();
+                }
+                catch (Exception ex)
+                {
+                    return Results.Problem(ex.ToString());
+                }
+
+            });
+
+        }      
     }
 }
