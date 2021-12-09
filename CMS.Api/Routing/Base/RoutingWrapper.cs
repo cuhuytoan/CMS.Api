@@ -5,6 +5,7 @@ namespace CMS.Api.Routing.Base
     {
         void MapAll();
         ISettingRouting SettingRouting { get; }
+        IArticleRouting ArticleRouting { get; }
         
     }
     public class RoutingWrapper : IRoutingWrapper
@@ -12,6 +13,7 @@ namespace CMS.Api.Routing.Base
         private WebApplication app { get; set; }
         private IServiceProvider provider;        
         private ISettingRouting _settingRouting;
+        private IArticleRouting _articleRouting;
         public RoutingWrapper(WebApplication app, IServiceProvider provider )
         {
             this.app = app;
@@ -29,9 +31,24 @@ namespace CMS.Api.Routing.Base
                 return _settingRouting;
             }
         }
+
+        public IArticleRouting ArticleRouting
+        {
+            get
+            {
+                if (_articleRouting == null)
+                {
+                    _articleRouting = new ArticleRouting(app, provider.GetRequiredService<IArticleRepository>());
+                }
+
+                return _articleRouting;
+            }
+        }
+
         public void MapAll()
         {
             SettingRouting.MapAll();
+            ArticleRouting.MapAll();
         }
     }
 }

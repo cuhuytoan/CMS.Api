@@ -9,10 +9,14 @@ namespace CMS.Services.RepositoriesBase
     {
         ISettingRepository Setting { get; }
 
-        void Save();
-
-        Task<int> SaveChangesAsync();
-
+        IArticleRepository Article { get; }
         
+        IArticleCommentRepository ArticleComment { get; }
+
+        IArticleCategoryRepository ArticleCategory { get; }
+
+        IArticleBlockRepository ArticleBlock { get; }
+
+        IArticleBlockArticleRepository ArticleBlockArticle { get; }
     }
 }
