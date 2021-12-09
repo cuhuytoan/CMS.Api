@@ -11,6 +11,7 @@ builder.Services.ConfigureConnectDB(builder.Configuration.GetConnectionString("C
 builder.Services.ConfigureConnectDBAuth(builder.Configuration.GetConnectionString("AuthConnection"));
 // ===== Add Services Transient Repository===========
 builder.Services.ConfigureServices();
+
 ServiceProvider? provider = builder.Services.BuildServiceProvider();
 builder.Services.AddCors(options =>
 {

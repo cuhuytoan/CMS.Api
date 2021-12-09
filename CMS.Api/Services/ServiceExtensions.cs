@@ -20,12 +20,10 @@ namespace CMS.Api.Services
 
         }
         public static void ConfigureServices(this IServiceCollection services)
-        {
-            
-            var ressult = services.RegisterAssemblyPublicNonGenericClasses(Utils.ListTypeRepository().ToArray())
+        {            
+            services.RegisterAssemblyPublicNonGenericClasses(Utils.ListTypeRepository().ToArray())
                  .Where(x => x.Name.EndsWith("Repository"))
-                 .AsPublicImplementedInterfaces(ServiceLifetime.Transient);
-            var xxx = ressult.Count();
+                 .AsPublicImplementedInterfaces(ServiceLifetime.Transient);           
         }
         public static void ConfigureSwagger(this IServiceCollection services)
         {

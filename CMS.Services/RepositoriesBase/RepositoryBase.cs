@@ -1,5 +1,6 @@
 ﻿using CMS.Data.ModelDTO;
 using CMS.Data.ModelEntity;
+using CMS.Data.ModelFilter;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,30 @@ namespace CMS.Services.RepositoriesBase
         {
             return await TEntity.FindAsync(id);
         }
+        public virtual async Task<T> GetByIdNoTracking(int id)
+        {
+            var et =  await TEntity.FindAsync(id);
+            if (et != null)
+            {
+                CmsContext.Entry(et).State = EntityState.Detached;
+            }
+            return et;
+        }
+
+        public virtual async Task<T> GetByGuidIdNoTracking(Guid id)
+        {
+            var et = await TEntity.FindAsync(id);
+            if (et != null)
+            {
+                CmsContext.Entry(et).State = EntityState.Detached;
+            }
+            return et;
+        }
         public virtual async Task<VirtualizeResponse<T>> GetAllWithPaging(int page , int pageSize )
         {
             VirtualizeResponse<T> entity = new();
             entity.TotalSize = TEntity.Count();
-            entity.Items = await TEntity.Skip(page * pageSize).Take(pageSize).AsNoTracking().ToListAsync();
+            entity.Items = await TEntity.Skip((page-1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync();
             return entity;
         }
 
@@ -55,6 +75,7 @@ namespace CMS.Services.RepositoriesBase
 
         public virtual async Task<T> Update(T entity)
         {
+            CmsContext.Entry(entity).State = EntityState.Detached;
             TEntity.Update(entity);
             await CmsContext.SaveChangesAsync();
             return entity;
@@ -70,6 +91,15 @@ namespace CMS.Services.RepositoriesBase
         {
             TEntity.RemoveRange(lstEntity);
             await CmsContext.SaveChangesAsync();
+        }
+
+        public virtual async Task<VirtualizeResponse<T>> GetByFilter(FilterDTO model)
+        {
+            VirtualizeResponse<T> result = new();      
+            var resultFilter = await TEntity.AsQueryable().ToFilterView(model).ToListAsync();
+            result.Items = resultFilter;
+            result.TotalSize = 100;
+            return result;
         }
     }
 }

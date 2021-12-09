@@ -1,4 +1,8 @@
 ﻿
+using CMS.Data.ModelFilter;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 namespace CMS.Api.Routing.Base
 {
     public interface IRoutingBase<T,R>
@@ -26,7 +30,7 @@ namespace CMS.Api.Routing.Base
                 return Results.Ok(result);
             });
 
-            app.MapGet($"/{typeof(T).Name}/GetById", async (string id, HttpContext http, R repository) =>
+            app.MapGet($"/{typeof(T).Name}/GetById", async (int id, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -42,6 +46,21 @@ namespace CMS.Api.Routing.Base
                 
             });
 
+            app.MapPost($"/{typeof(T).Name}/GetAllByFilter", async (FilterDTO model ,HttpContext http, R repository) =>
+            {
+                var result = await repository.GetByFilter(model);
+                return Results.Ok(result);
+
+            });
+
+            app.MapGet($"/{typeof(T).Name}/GetAllWithPaging", async (int page, int pageSize, HttpContext http, R repository) =>
+            {
+                var result = await repository.GetAllWithPaging(page,pageSize);
+                return Results.Ok(result);
+
+            });
+
+
             app.MapPost($"/{typeof(T).Name}/PostAsync", async (T model, HttpContext http, R repository) =>
             {
                 try
@@ -55,14 +74,14 @@ namespace CMS.Api.Routing.Base
                 }
             });
 
-            app.MapPut($"/{typeof(T).Name}/PutAsync", async (object id, T model, HttpContext http, R repository) =>
+            app.MapPut($"/{typeof(T).Name}/PutAsync", async (int id, T model, HttpContext http, R repository) =>
             {
                 try
                 {
-                    var item = await repository.GetById(id);
-                    if (item == null) return Results.NotFound($"Not found item with id : {id}");
+                    var item = await repository.GetByIdNoTracking(id);
+                    if (item == null) return Results.BadRequest($"Not found item with id : {id}");
                     await repository.Update(model);
-                    return Results.Ok(item);
+                    return Results.Ok(model);
                 }
                 catch (Exception ex)
                 {
@@ -71,7 +90,7 @@ namespace CMS.Api.Routing.Base
 
             });
 
-            app.MapDelete($"/{typeof(T).Name}/Delete", async (object id, HttpContext http, R repository) =>
+            app.MapDelete($"/{typeof(T).Name}/Delete", async (int id, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -92,10 +111,12 @@ namespace CMS.Api.Routing.Base
                 try
                 {
                     List<T> lstDelete = new();
-                    IEnumerable<object> lstObjects = ids.Split(",").ToList();
+                    IEnumerable<string> lstObjects = ids.Split(",").ToList();
                     foreach (var obj in lstObjects)
                     {
-                        var existsItem = await repository.GetById(obj);
+                        int id;
+                        if(!Int32.TryParse(obj, out id)) return Results.Problem($"Problem with {ids}");                       
+                        var existsItem = await repository.GetById(id);
                         if (existsItem == null) return Results.NotFound($"Not found item with id : {obj}");
                         lstDelete.Add(existsItem);
                     }
