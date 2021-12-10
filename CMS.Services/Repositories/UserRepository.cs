@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace CMS.Services.Repositories
 {
-    public interface IArticleBlockArticleRepository : IRepositoryBase<ArticleBlockArticle>
+    public interface IUserRepository : IRepositoryBase<AspNetUsers>
     {
       
     }
    
-    public class ArticleBlockArticleRepository : RepositoryBase<ArticleBlockArticle>, IArticleBlockArticleRepository
+    public class UserRepository : RepositoryBase<AspNetUsers>, IUserRepository
     {
-        public ArticleBlockArticleRepository(CmsContext CmsDBContext) : base(CmsDBContext)
+        public UserRepository(CmsContext CmsDBContext) : base(CmsDBContext)
         {
         }
       

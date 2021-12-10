@@ -24,13 +24,13 @@ namespace CMS.Api.Routing.Base
         public async Task MapBase()
         {
 
-            app.MapGet($"/{typeof(T).Name}/GetAll", async (R repository) =>
+            app.MapGet($"/api/{typeof(T).Name}/GetAll", async (R repository) =>
             {
                 var result = await repository.GetAll();
                 return Results.Ok(result);
             });
 
-            app.MapGet($"/{typeof(T).Name}/GetById", async (int id, HttpContext http, R repository) =>
+            app.MapGet($"/api/{typeof(T).Name}/GetById", async (int id, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -46,14 +46,14 @@ namespace CMS.Api.Routing.Base
                 
             });
 
-            app.MapPost($"/{typeof(T).Name}/GetAllByFilter", async (FilterDTO model ,HttpContext http, R repository) =>
+            app.MapPost($"/api/{typeof(T).Name}/GetAllByFilter", async (FilterDTO model ,HttpContext http, R repository) =>
             {
                 var result = await repository.GetByFilter(model);
                 return Results.Ok(result);
 
             });
 
-            app.MapGet($"/{typeof(T).Name}/GetAllWithPaging", async (int page, int pageSize, HttpContext http, R repository) =>
+            app.MapGet($"/api/{typeof(T).Name}/GetAllWithPaging", async (int page, int pageSize, HttpContext http, R repository) =>
             {
                 var result = await repository.GetAllWithPaging(page,pageSize);
                 return Results.Ok(result);
@@ -61,7 +61,7 @@ namespace CMS.Api.Routing.Base
             });
 
 
-            app.MapPost($"/{typeof(T).Name}/PostAsync", async (T model, HttpContext http, R repository) =>
+            app.MapPost($"/api/{typeof(T).Name}/PostAsync", async (T model, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -74,7 +74,7 @@ namespace CMS.Api.Routing.Base
                 }
             });
 
-            app.MapPut($"/{typeof(T).Name}/PutAsync", async (int id, T model, HttpContext http, R repository) =>
+            app.MapPut($"/api/{typeof(T).Name}/PutAsync", async (int id, T model, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -90,7 +90,7 @@ namespace CMS.Api.Routing.Base
 
             });
 
-            app.MapDelete($"/{typeof(T).Name}/Delete", async (int id, HttpContext http, R repository) =>
+            app.MapDelete($"/api/{typeof(T).Name}/Delete", async (int id, HttpContext http, R repository) =>
             {
                 try
                 {
@@ -106,7 +106,7 @@ namespace CMS.Api.Routing.Base
 
             });
 
-            app.MapDelete($"/{typeof(T).Name}/BulkDelete", async (string ids, HttpContext http, R repository) =>
+            app.MapDelete($"/api/{typeof(T).Name}/BulkDelete", async (string ids, HttpContext http, R repository) =>
             {
                 try
                 {

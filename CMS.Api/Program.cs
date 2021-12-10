@@ -12,7 +12,22 @@ builder.Services.ConfigureConnectDBAuth(builder.Configuration.GetConnectionStrin
 // ===== Add Services Transient Repository===========
 builder.Services.ConfigureServices();
 
-ServiceProvider? provider = builder.Services.BuildServiceProvider();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateActor = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]))
+    };
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PolicyName", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains());
@@ -27,13 +42,12 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseAuthorization();
+app.UseAuthentication();
 app.UseCors("PolicyName");
-var routing = new RoutingWrapper(app, provider);
+var routing = new RoutingWrapper(app, builder.Services.BuildServiceProvider());
 
 routing.MapAll();
-
-
 
 app.Run();
 
