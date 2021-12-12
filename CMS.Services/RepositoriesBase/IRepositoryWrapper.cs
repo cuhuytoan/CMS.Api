@@ -18,5 +18,11 @@ namespace CMS.Services.RepositoriesBase
         IArticleBlockRepository ArticleBlock { get; }
 
         IArticleBlockArticleRepository ArticleBlockArticle { get; }
+
+        IAspNetUserProfilesRepository AspNetUserProfiles { get; }
+
+        IAspNetRolesRepository AspNetRoles { get; }
+
+        IAspNetUserRolesRepository AspNetUserRoles { get; }
     }
 }

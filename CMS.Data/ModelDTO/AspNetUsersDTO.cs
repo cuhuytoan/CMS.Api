@@ -3,6 +3,7 @@ using CMS.Data.ValidationCustomize;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CMS.Data.ModelDTO
 {
@@ -153,6 +154,8 @@ namespace CMS.Data.ModelDTO
     }
     public class LoginModel
     {
+        [JsonIgnore]
+        public string Id { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập tài khoản")]
         //[EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
@@ -163,6 +166,9 @@ namespace CMS.Data.ModelDTO
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public string IPAddress { get; set; }
+        [JsonIgnore]
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
     public class PinCodeModel
     {
@@ -221,4 +227,37 @@ namespace CMS.Data.ModelDTO
         [Required(ErrorMessage = "Vui lòng nhập họ tên")]        
         public string FullName { get; set; }
     }
+    public class RefreshToken
+    {
+        [Key]
+        [JsonIgnore]
+        public int Id { get; set; }
+        public string Token { get; set; }
+        public DateTime Expires { get; set; }
+        public DateTime Created { get; set; }
+        public string CreatedByIp { get; set; }
+        public DateTime? Revoked { get; set; }
+        public string RevokedByIp { get; set; }
+        public string ReplacedByToken { get; set; }
+        public string ReasonRevoked { get; set; }
+        public bool IsExpired => DateTime.UtcNow >= Expires;
+        public bool IsRevoked => Revoked != null;
+        public bool IsActive => !IsRevoked && !IsExpired;
+    }
+
+    public class SumProfileResponseDTO : ModelBase
+    {
+        /// <summary>
+        /// Profile respose
+        /// </summary>
+        public AspNetUserProfiles Profile { get; set; }
+        /// <summary>
+        /// List Role response
+        /// </summary>
+        public List<AspNetRoles> ListRole { get; set; }
+        public string Token { get; set; }
+        public List<RefreshToken> RefreshToken { get; set; }
+    
+    }
+   
 }

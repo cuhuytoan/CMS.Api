@@ -11,9 +11,9 @@ namespace CMS.Api.Routing
         {
         }
 
-        public async Task MapAll()
+        public override async Task MapAll()
         {
-            await MapBase();
+            await base.MapAll();
         }
     }
 }

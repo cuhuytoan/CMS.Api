@@ -18,12 +18,49 @@ namespace CMS.Services.RepositoriesBase
         private IArticleCategoryRepository _articleCategory;
         private IArticleBlockRepository _articleBlock;
         private IArticleBlockArticleRepository _articleBlockArticle;
+        private IAspNetUserProfilesRepository _aspNetUserProfiles;
+        private IAspNetRolesRepository _aspNetRoles;
+        private IAspNetUserRolesRepository _aspNetUserRoles;
         public RepositoryWrapper(IDbContextFactory<CmsContext> CmsContext)
         {
             _cmsContext = CmsContext;           
         }
-        
-        
+        public IAspNetUserRolesRepository AspNetUserRoles
+        {
+            get
+            {
+                if (_aspNetUserRoles == null)
+                {
+                    _aspNetUserRoles = new AspNetUserRolesRepository(_cmsContext.CreateDbContext());
+                }
+
+                return _aspNetUserRoles;
+            }
+        }
+        public IAspNetRolesRepository AspNetRoles
+        {
+            get
+            {
+                if (_aspNetRoles == null)
+                {
+                    _aspNetRoles = new AspNetRolesRepository(_cmsContext.CreateDbContext());
+                }
+
+                return _aspNetRoles;
+            }
+        }
+        public IAspNetUserProfilesRepository AspNetUserProfiles
+        {
+            get
+            {
+                if (_aspNetUserProfiles == null)
+                {
+                    _aspNetUserProfiles = new AspNetUserProfilesRepository(_cmsContext.CreateDbContext());
+                }
+
+                return _aspNetUserProfiles;
+            }
+        }
         public ISettingRepository Setting
         {
             get
@@ -98,6 +135,6 @@ namespace CMS.Services.RepositoriesBase
             }
         }
 
-
+        
     }
 }

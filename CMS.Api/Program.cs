@@ -1,3 +1,5 @@
+﻿
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +11,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureConnectDB(builder.Configuration.GetConnectionString("CmsConnection"));
 // ===== Add Database Auth===========================
 builder.Services.ConfigureConnectDBAuth(builder.Configuration.GetConnectionString("AuthConnection"));
+// ===== Config Identity=============================
+// ===== Add Identity ========
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// ===== Config Identity ========
+builder.Services.ConfigureIdentity();
 // ===== Add Services Transient Repository===========
 builder.Services.ConfigureServices();
-
+// ===== Add Services Transient Repository Wrapper===
+builder.Services.AddTransient<IRepositoryWrapper,RepositoryWrapper>();
+// configure strongly typed settings object
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+// configure DI for application services
+builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -22,9 +37,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]))
+        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+        ValidAudience = builder.Configuration["AppSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Secret"]))
     };
 });
 
@@ -32,6 +47,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PolicyName", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowedToAllowWildcardSubdomains());
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,7 +61,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.UseAuthentication();
 app.UseCors("PolicyName");
-var routing = new RoutingWrapper(app, builder.Services.BuildServiceProvider());
+var provider = builder.Services.BuildServiceProvider();
+var routing = new RoutingWrapper(app, provider);
 
 routing.MapAll();
 

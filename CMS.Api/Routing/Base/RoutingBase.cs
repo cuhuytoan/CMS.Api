@@ -7,7 +7,7 @@ namespace CMS.Api.Routing.Base
 {
     public interface IRoutingBase<T,R>
     {
-        Task MapBase();
+        Task MapAll();
         
     }    
     public abstract class RoutingBase<T,R> : IRoutingBase<T,R> where R : IRepositoryBase<T>                                                              
@@ -21,14 +21,14 @@ namespace CMS.Api.Routing.Base
             this.repository = repository;
         }
 
-        public async Task MapBase()
+        public virtual async Task MapAll()
         {
 
             app.MapGet($"/api/{typeof(T).Name}/GetAll", async (R repository) =>
             {
                 var result = await repository.GetAll();
                 return Results.Ok(result);
-            });
+            }).WithTags(typeof(T).Name);
 
             app.MapGet($"/api/{typeof(T).Name}/GetById", async (int id, HttpContext http, R repository) =>
             {
@@ -44,21 +44,20 @@ namespace CMS.Api.Routing.Base
                     return Results.Problem(ex.ToString());
                 }
                 
-            });
+            }).WithTags(typeof(T).Name);
 
             app.MapPost($"/api/{typeof(T).Name}/GetAllByFilter", async (FilterDTO model ,HttpContext http, R repository) =>
             {
                 var result = await repository.GetByFilter(model);
                 return Results.Ok(result);
 
-            });
-
+            }).WithTags(typeof(T).Name);
             app.MapGet($"/api/{typeof(T).Name}/GetAllWithPaging", async (int page, int pageSize, HttpContext http, R repository) =>
             {
                 var result = await repository.GetAllWithPaging(page,pageSize);
                 return Results.Ok(result);
 
-            });
+            }).WithTags(typeof(T).Name);
 
 
             app.MapPost($"/api/{typeof(T).Name}/PostAsync", async (T model, HttpContext http, R repository) =>
@@ -72,7 +71,7 @@ namespace CMS.Api.Routing.Base
                 {
                     return Results.Problem(ex.ToString());
                 }
-            });
+            }).WithTags(typeof(T).Name);
 
             app.MapPut($"/api/{typeof(T).Name}/PutAsync", async (int id, T model, HttpContext http, R repository) =>
             {
@@ -88,7 +87,7 @@ namespace CMS.Api.Routing.Base
                     return Results.Problem(ex.ToString());
                 }
 
-            });
+            }).WithTags(typeof(T).Name);
 
             app.MapDelete($"/api/{typeof(T).Name}/Delete", async (int id, HttpContext http, R repository) =>
             {
@@ -104,7 +103,7 @@ namespace CMS.Api.Routing.Base
                     return Results.Problem(ex.ToString());
                 }
 
-            });
+            }).WithTags(typeof(T).Name);
 
             app.MapDelete($"/api/{typeof(T).Name}/BulkDelete", async (string ids, HttpContext http, R repository) =>
             {
@@ -128,7 +127,7 @@ namespace CMS.Api.Routing.Base
                     return Results.Problem(ex.ToString());
                 }
 
-            });
+            }).WithTags(typeof(T).Name);
 
         }      
     }
